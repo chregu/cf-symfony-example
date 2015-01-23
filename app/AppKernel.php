@@ -34,4 +34,71 @@ class AppKernel extends Kernel
     {
         $loader->load(__DIR__.'/config/config_'.$this->getEnvironment().'.yml');
     }
+
+   /**
+     * {@inheritdoc}
+     *
+     * @api
+     */
+    public function getCacheDir()
+    {
+        if (isset($_ENV['VCAP_APPLICATION'])) {
+            return sys_get_temp_dir() . '/symfony2/cache';
+        }
+
+        return parent::getCacheDir();
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     */
+    public function getLogDir()
+    {
+        if (isset($_ENV['VCAP_APPLICATION'])) {
+            return sys_get_temp_dir() . '/symfony2/logs';
+        }
+
+
+        return parent::getLogDir();
+    }
+
+    /**
+     * Gets the environment parameters from VCAP_SERVICES
+     *
+     * @return array An array of parameters
+     */
+    protected function getEnvParameters()
+    {
+        $parameters = array();
+        $vcap_services = getenv('VCAP_SERVICES');
+        if ($vcap_services) {
+            $vcap_services = json_decode(getenv('VCAP_SERVICES'), true);
+            foreach ($vcap_services as $name => $service) {
+                foreach ($service as $s) {
+                    $parameters = array_merge($parameters, $this->getVcapParameter($s));
+                }
+            }
+        }
+
+        return array_merge(parent::getEnvParameters(), $parameters);
+    }
+
+    /**
+     * Gets the environment parameters from a service in VCAP_SERVICES
+     *
+     * @param array $service An array with the service definition
+     *
+     * @return array An array of parameters
+     */
+    protected function getVcapParameter(array $service)
+    {
+        $params = array();
+        foreach ($service['credentials'] as $key => $value) {
+            $params["vcap." . $service['name'] . "." . $key] = $value;
+        }
+        return $params;
+    }
+
 }

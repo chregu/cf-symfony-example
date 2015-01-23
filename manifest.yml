@@ -1,0 +1,14 @@
+---
+applications:
+- name: cf-symfony-example
+  memory: 128M
+  instances: 1
+  # buildpack: http://github.com/dmikusa-pivotal/cf-php-build-pack.git
+  # This will add it to environment running inside the container
+  # You can read this out with your APP!
+  buildpack: php_buildpack_new
+  env:
+    SYMFONY_ENV: prod
+    # http_proxy: ...
+    # BP_DEBUG: "True"
+
