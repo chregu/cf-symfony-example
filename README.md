@@ -1,69 +1,66 @@
-Symfony Standard Edition
+Symfony Example for Cloud Foundry
 ========================
 
-Welcome to the Symfony Standard Edition - a fully-functional Symfony2
-application that you can use as the skeleton for your new applications.
+This is a ready-to-run example to get Symfony Apps running on Cloud Foundry. This is for the php_buildpack 3.0 available here [https://github.com/cloudfoundry/php-buildpack](https://github.com/cloudfoundry/php-buildpack)
 
-For details on how to download and get started with Symfony, see the
-[Installation][1] chapter of the Symfony Documentation.
+How have to change/add the following stuff to make it running
 
-What's inside?
---------------
+## manifest.yml
 
-The Symfony Standard Edition is configured with the following defaults:
 
-  * An AppBundle you can use to start coding;
+[manifest.yml](manifest.yml)
 
-  * Twig as the only configured template engine;
+Actually, not really needed, but recommended. Saves you typing the same stuff into the commandline again and again.
 
-  * Doctrine ORM/DBAL;
+## .bc-config/options.json
 
-  * Swiftmailer;
+Here goes the main config for the buildpack. 
+See [the config docs of the build pack](https://github.com/cloudfoundry/php-buildpack/blob/master/docs/config.md) for details and more
 
-  * Annotations enabled for everything.
+### "PHP_VERSION"
 
-It comes pre-configured with the following bundles:
+ "{PHP_55_LATEST}",
 
-  * **FrameworkBundle** - The core Symfony framework bundle
+### "WEB_SERVER"
 
-  * [**SensioFrameworkExtraBundle**][6] - Adds several enhancements, including
-    template and routing annotation capability
+ "nginx",
 
-  * [**DoctrineBundle**][7] - Adds support for the Doctrine ORM
+### "ZEND_EXTENSIONS"
 
-  * [**TwigBundle**][8] - Adds support for the Twig templating engine
+ ["opcache"],
 
-  * [**SecurityBundle**][9] - Adds security by integrating Symfony's security
-    component
+### "PHP_EXTENSIONS"
 
-  * [**SwiftmailerBundle**][10] - Adds support for Swiftmailer, a library for
-    sending emails
+ ["soap","json","curl","simplexml","pdo", "pdo_mysql"],
+ 
+ you can also put them into composer.json in "require" as eg. "ext-mbstring"
 
-  * [**MonologBundle**][11] - Adds support for Monolog, a logging library
+### "WEBDIR"
 
-  * [**AsseticBundle**][12] - Adds support for Assetic, an asset processing
-    library
+ "web",
+### "COMPOSER_VENDOR_DIR"
 
-  * **WebProfilerBundle** (in dev/test env) - Adds profiling functionality and
-    the web debug toolbar
+ "vendor/",
 
-  * **SensioDistributionBundle** (in dev/test env) - Adds functionality for
-    configuring and working with Symfony distributions
+### "COMPOSER_INSTALL_OPTIONS"
 
-  * [**SensioGeneratorBundle**][13] (in dev/test env) - Adds code generation
-    capabilities
+ ["--no-scripts", "--no-dev"],
+### "ADDITIONAL_PREPROCESS_CMDS"
 
-All libraries and bundles included in the Symfony Standard Edition are
-released under the MIT or BSD license.
+ "php $HOME/php/bin/composer.phar install --no-dev --no-progress"
 
-Enjoy!
+## .cfignore
 
-[1]:  http://symfony.com/doc/2.6/book/installation.html
-[6]:  http://symfony.com/doc/2.6/bundles/SensioFrameworkExtraBundle/index.html
-[7]:  http://symfony.com/doc/2.6/book/doctrine.html
-[8]:  http://symfony.com/doc/2.6/book/templating.html
-[9]:  http://symfony.com/doc/2.6/book/security.html
-[10]: http://symfony.com/doc/2.6/cookbook/email.html
-[11]: http://symfony.com/doc/2.6/cookbook/logging/monolog.html
-[12]: http://symfony.com/doc/2.6/cookbook/assetic/asset_management.html
-[13]: http://symfony.com/doc/2.6/bundles/SensioGeneratorBundle/index.html
+maybe you don't want to upload the vendor/ dir or other files
+
+## app/AppKernel.php
+
+Cache and Log Files have to go into a tmp directory
+
+## .bp-config/nginx/server-locations.conf
+
+make app.php the default 
+
+## .bp-config/php/php-fpm.conf
+
+adjusting to your need (memory_limit for example)
