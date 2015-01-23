@@ -14,6 +14,8 @@ Actually, not really needed, but recommended. Saves you typing the same stuff in
 
 ## .bc-config/options.json
 
+[.bc-config/options.json](.bc-config/options.json)
+
 Here goes the main config for the buildpack. 
 See [the config docs of the build pack](https://github.com/cloudfoundry/php-buildpack/blob/master/docs/config.md) for details and more
 
@@ -44,23 +46,36 @@ See [the config docs of the build pack](https://github.com/cloudfoundry/php-buil
 
 ### "COMPOSER_INSTALL_OPTIONS"
 
- ["--no-scripts", "--no-dev"],
+ ["--no-scripts", "--no-dev"]
+ 
+ Needed because there's no environment from manifest.yml set in the first run of composer.phar install. And there for some things fail in AppKernel.php only defined for dev installations. But they are removed in composer.phar install. We run composer a second time with the following command (this time with running the scripts)
+ 
 ### "ADDITIONAL_PREPROCESS_CMDS"
 
  "php $HOME/php/bin/composer.phar install --no-dev --no-progress"
 
 ## .cfignore
 
+[.cfignore](.cfignore)
 maybe you don't want to upload the vendor/ dir or other files
 
 ## app/AppKernel.php
 
+[app/AppKernel.php](https://github.com/chregu/cf-symfony-example/commit/5d69d4c05379510f5e7206272b7529de478fb372#diff-c23da96dc8986a4cee89980f3aad30e0)
+
+
 Cache and Log Files have to go into a tmp directory
+
+And also a way to parse VCAP_SERVICES and easily access them in parameters.yml with eg. `%vcap.mysql-service.hostname%`
 
 ## .bp-config/nginx/server-locations.conf
 
-make app.php the default 
+[.bp-config/nginx/server-locations.conf](.bp-config/nginx/server-locations.conf)
+
+make app.php the default in nginx
 
 ## .bp-config/php/php-fpm.conf
 
-adjusting to your need (memory_limit for example)
+[.bp-config/php/php-fpm.conf](.bp-config/php/php-fpm.conf)
+
+adjusting to your needs (memory_limit for example)
