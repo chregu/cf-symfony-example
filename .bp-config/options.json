@@ -2,7 +2,7 @@
 "PHP_VERSION": "{PHP_55_LATEST}",
 "WEB_SERVER": "nginx",
 "ZEND_EXTENSIONS": ["opcache"],
-"PHP_EXTENSIONS": ["soap","mbstring","json","curl","simplexml","pdo", "pdo_mysql"],
+"PHP_EXTENSIONS": ["soap","json","curl","simplexml","pdo", "pdo_mysql"],
 "WEBDIR": "web",
 "COMPOSER_VENDOR_DIR": "vendor/",
 "COMPOSER_INSTALL_OPTIONS": ["--no-scripts", "--no-dev"],
