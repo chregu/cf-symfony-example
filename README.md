@@ -3,7 +3,7 @@ Symfony Example for Cloud Foundry
 
 This is a ready-to-run example to get Symfony Apps running on Cloud Foundry. This is for the php_buildpack 3.0 available here [https://github.com/cloudfoundry/php-buildpack](https://github.com/cloudfoundry/php-buildpack)
 
-How have to change/add the following stuff to make it running
+You have to change/add the following stuff to make it running
 
 ## manifest.yml
 
