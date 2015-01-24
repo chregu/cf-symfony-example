@@ -3,6 +3,8 @@ Symfony Example for Cloud Foundry
 
 This is a ready-to-run example to get Symfony Apps running on Cloud Foundry. This is for the php_buildpack 3.0 available here [https://github.com/cloudfoundry/php-buildpack](https://github.com/cloudfoundry/php-buildpack)
 
+It doesn't work with the 1.0 php buildpack.
+
 You have to change/add the following stuff to make it running
 
 ## manifest.yml
@@ -10,7 +12,9 @@ You have to change/add the following stuff to make it running
 
 [manifest.yml](manifest.yml)
 
-Actually, not really needed, but recommended. Saves you typing the same stuff into the commandline again and again.
+Not mandatory, but recommended. Saves you typing the same stuff into the commandline again and again.
+
+Be aware that env variablias from manifest.yml are not set in the composer install stage of the buildpack, see below for details.
 
 ## .bc-config/options.json
 
@@ -33,9 +37,12 @@ See [the config docs of the build pack](https://github.com/cloudfoundry/php-buil
 
 ### "PHP_EXTENSIONS"
 
- ["soap","json","curl","simplexml","pdo", "pdo_mysql"],
+Here, you can define needed PHP extensions, eg
+
+`["json","curl","simplexml","pdo", "pdo_mysql"]`
  
- you can also put them into composer.json in "require" as eg. "ext-mbstring"
+But I prefer defining them in composer.json with eg. `"ext-json": "*"`
+
 
 ### "WEBDIR"
 
@@ -53,6 +60,9 @@ See [the config docs of the build pack](https://github.com/cloudfoundry/php-buil
 ### "ADDITIONAL_PREPROCESS_CMDS"
 
  "php $HOME/php/bin/composer.phar install --no-dev --no-progress"
+ 
+ `composer.phar run-script post-install-cmd`
+
 
 ## .cfignore
 
