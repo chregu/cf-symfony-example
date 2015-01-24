@@ -1,4 +1,7 @@
 {
+"#PHP_VM": "hhvm",
+"PHP_VM": "php",
+"HHVM_VERSION": "3.5.0",
 "PHP_VERSION": "{PHP_55_LATEST}",
 "WEB_SERVER": "nginx",
 "ZEND_EXTENSIONS": ["opcache"],
@@ -6,5 +9,6 @@
 "WEBDIR": "web",
 "COMPOSER_VENDOR_DIR": "vendor/",
 "COMPOSER_INSTALL_OPTIONS": ["--no-scripts", "--no-dev"],
-"ADDITIONAL_PREPROCESS_CMDS": "php $HOME/php/bin/composer.phar run-script --no-dev post-install-cmd "
+"ADDITIONAL_PREPROCESS_CMDS": "php $HOME/php/bin/composer.phar run-script --no-dev post-install-cmd ",
+"#ADDITIONAL_PREPROCESS_CMDS": "hhvm --config $HOME/hhvm/etc/php.ini $HOME/php/bin/composer.phar run-script --no-dev post-install-cmd"
 }
