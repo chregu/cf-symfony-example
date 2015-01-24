@@ -7,6 +7,7 @@ applications:
   # This will add it to environment running inside the container
   # You can read this out with your APP!
   # buildpack: php_buildpack_new
+  buildpack: https://github.com/cloudfoundry/php-buildpack.git
   env:
     SYMFONY_ENV: prod
     # http_proxy: ...
