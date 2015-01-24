@@ -7,7 +7,7 @@
         "psr-0": { "": "src/", "SymfonyStandard": "app/" }
     },
     "require": {
-        "php": ">=5.3.3",
+        "php": ">=5.5",
         "symfony/symfony": "2.6.*",
         "twig/extensions": "~1.0",
         "symfony/assetic-bundle": "~2.3",
@@ -17,7 +17,12 @@
         "sensio/framework-extra-bundle": "~3.0",
         "incenteev/composer-parameter-handler": "~2.0",
         "ekino/newrelic-bundle": "~1.2",
-        "ext-mbstring": "*"
+        "ext-mbstring": "*",
+        "ext-json": "*",
+        "ext-curl": "*",
+        "ext-simplexml": "*",
+        "ext-pdo": "*",
+        "ext-pdo_mysql": "*"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3"
@@ -44,8 +49,11 @@
         ]
     },
     "config": {
-        "bin-dir": "bin"
-    },
+        "bin-dir": "bin",
+      "github-oauth": {
+        "github.com": "f54a979097f9e65630ec6e6a45ed9548b55640ef"
+    }
+  },
     "extra": {
         "symfony-app-dir": "app",
         "symfony-web-dir": "web",
