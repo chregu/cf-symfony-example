@@ -1,0 +1,6 @@
+#!/bin/bash
+if [ -f $HOME/hhvm/usr/bin/hhvm ]; then
+    $HOME/hhvm/usr/bin/hhvm -c "$HOME/hhvm/etc/php.ini" "$@"
+else
+    $HOME/php/bin/php "$@"
+fi

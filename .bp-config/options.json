@@ -1,6 +1,4 @@
 {
-"#PHP_VM": "hhvm",
-"PHP_VM": "php",
 "HHVM_VERSION": "3.5.0",
 "PHP_VERSION": "{PHP_55_LATEST}",
 "WEB_SERVER": "nginx",
@@ -8,7 +6,9 @@
 "PHP_EXTENSIONS": [],
 "WEBDIR": "web",
 "COMPOSER_VENDOR_DIR": "vendor/",
-"COMPOSER_INSTALL_OPTIONS": ["--no-scripts", "--no-dev"],
-"ADDITIONAL_PREPROCESS_CMDS": "php $HOME/php/bin/composer.phar run-script --no-dev post-install-cmd ",
-"#ADDITIONAL_PREPROCESS_CMDS": "hhvm --config $HOME/hhvm/etc/php.ini $HOME/php/bin/composer.phar run-script --no-dev post-install-cmd"
+"COMPOSER_INSTALL_OPTIONS": [ "--no-dev", "--no-scripts"],
+"#Comment": "The --no-scripts above and the run-script below can maybe go away when the ini problem with hhvm and composer during staging is solved (and you can remove it, if you don't use HHVM at all)",
+"ADDITIONAL_PREPROCESS_CMDS": "$PHP_BINARY $HOME/php/bin/composer.phar run-script --no-dev post-install-cmd"
 }
+
+
